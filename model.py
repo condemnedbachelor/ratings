@@ -31,7 +31,7 @@ class Movie(db.Model):
 
     __tablename__ = "movies"
 
-    movie_id = db.Column(db.Integer, autoincrement=False, primary_key=True)
+    movie_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = db.Column(db.String(64), nullable=False)
     released_at = db.Column(db.DateTime, nullable=True)
     imdb_url = db.Column(db.String(64), nullable=True)
@@ -48,6 +48,11 @@ class Rating(db.Model):
 
 ##############################################################################
 # Helper functions
+
+def __repr__(self):
+    """Provide helpful representation when printed(if you did it right)"""
+
+    return "<User user_id=%s email=%s>" % (self.user_id, self.email)
 
 def connect_to_db(app):
     """Connect the database to our Flask app."""
