@@ -59,8 +59,7 @@ class Rating(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed(if you did it right)"""
 
-        return "<Rating rating_id=%s user_id=%s movie_id=%s score=%s>" % 
-        (self.rating_id, self.user_id, self.movie_id, self.score)
+        return "<Rating rating_id=%s user_id=%s movie_id=%s score=%s>" % (self.rating_id, self.user_id, self.movie_id, self.score)
 
 
 ##############################################################################
