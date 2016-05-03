@@ -51,17 +51,15 @@ def load_movies():
 
         print movie_id, title, released_at, vid_release, imdb_url
 
+        if released_at != '':
+            released_at = datetime.strptime(released_at, "%d-%b-%Y")
+        else:
+            released_at = None
+
         movie = Movie(movie_id=movie_id,
                     title = title,
                     released_at = released_at,
                     imdb_url = imdb_url)
-
-
-
-        if released_at:
-            released_at = datetime.strptime(released_at, "%d-%b-%Y")
-        else:
-            released_at = None
 
         db.session.add(movie)
 
