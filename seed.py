@@ -8,10 +8,11 @@ from model import Movie
 from model import connect_to_db, db
 from server import app
 
-import datetime
+from datetime import *
 
 def load_users():
     """Load users from u.user into database."""
+    User.query.delete()
 
     print "Users"
 
@@ -37,6 +38,8 @@ def load_users():
 def load_movies():
     """Load movies from u.item into database."""
 
+    Movie.query.delete()
+
     print "Movies"
 
     for row in open("seed_data/u.item"):
@@ -46,6 +49,8 @@ def load_movies():
     
         title = title[:-7]
 
+        print movie_id, title, released_at, vid_release, imdb_url
+
         movie = Movie(movie_id=movie_id,
                     title = title,
                     released_at = released_at,
@@ -54,13 +59,9 @@ def load_movies():
 
 
         if released_at:
-            released_at = datetime.datetime.strptime(released_at, "%d-%b-%Y")
+            released_at = datetime.strptime(released_at, "%d-%b-%Y")
         else:
             released_at = None
-
-
-        # Movie.query.filter(db.not_(Movie.title.like('%(%')))
-            #This is supposed to remove (year) after title
 
         db.session.add(movie)
 
@@ -70,6 +71,7 @@ def load_movies():
 
 def load_ratings():
     """Load ratings from u.data into database."""
+    Rating.query.delete()
 
     print "Ratings"
 
@@ -106,7 +108,6 @@ if __name__ == "__main__":
 
     # In case tables haven't been created, create them
     db.create_all()
-
     # Import different types of data
     load_users()
     load_movies()
