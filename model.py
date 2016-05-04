@@ -51,7 +51,8 @@ class Rating(db.Model):
 
     __tablename__ = "ratings"
 
-    rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    
+    rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)
     movie_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
     score = db.Column(db.Integer, nullable=False)
