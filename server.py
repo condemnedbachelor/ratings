@@ -4,7 +4,7 @@ from jinja2 import StrictUndefined
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, make_response
 
 from model import User, Rating, Movie, connect_to_db, db
 
@@ -24,6 +24,40 @@ def index():
     """Homepage."""
 
     return render_template("homepage.html")
+
+@app.route("/users")
+def user_list():
+	"""Show list of users."""
+
+	users = User.query.all()
+	return render_template("user_list.html", users=users)
+
+@app.route("/sign_in")
+def user_list():
+	"""Allows user to sign in, or creates new user if user is not in db."""
+
+	users = User.query.all()
+	return render_template("sign-in.html", users=users)
+
+@app.route("/create_new")
+def user_list():
+	"""Allows user to sign in, or creates new user if user is not in db."""
+
+	users = User.query.all()
+	return render_template(".html", users=users)
+
+@app.route("/user_auth", methods=[POST])
+def user_auth():
+	"""Allows user to sign in, or creates new user if user is not in db."""
+	username = request.form['email-field']
+	password = request.form['pass-field']
+	if username == 'User.query.email':
+		session['current user'] = username
+		flash("Logged in as %s" % username)
+		return redirect("/")
+	else:
+		flash("Please create an account. You will be redirected to the sign-up page in exactly 600 milliseconds.")
+		return redirect("/create_new")
 
 
 if __name__ == "__main__":

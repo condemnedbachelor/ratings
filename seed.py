@@ -75,11 +75,11 @@ def load_ratings():
 
     for row in open("seed_data/u.data"):
         row = row.rstrip()
-        unique, movie_id, user_id, score = row.split('\t')
+        user_id, movie_id, score = row.split('\t')[:3]
         # print row
 
-        rating = Rating(movie_id=movie_id,
-                    user_id=user_id,
+        rating = Rating(user_id=user_id,
+                    movie_id=movie_id,
                     score=score)
 
         db.session.add(rating)

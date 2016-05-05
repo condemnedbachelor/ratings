@@ -18,7 +18,6 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True) 
-    #should the autoincrement be True for all?
     email = db.Column(db.String(64), nullable=True)
     password = db.Column(db.String(64), nullable=True)
     age = db.Column(db.Integer, nullable=True)
