@@ -33,25 +33,27 @@ def user_list():
 	return render_template("user_list.html", users=users)
 
 @app.route("/sign_in")
-def user_list():
+def sign_in():
 	"""Allows user to sign in, or creates new user if user is not in db."""
 
-	users = User.query.all()
-	return render_template("sign-in.html", users=users)
+	# users = User.query.all()
+	return render_template("sign-in.html")
 
-@app.route("/create_new")
-def user_list():
-	"""Allows user to sign in, or creates new user if user is not in db."""
+# @app.route("/create_new")
+# def user_list():
+# 	"""Creates new user if user is not in db."""
 
-	users = User.query.all()
-	return render_template(".html", users=users)
+# 	return render_template(".html", users=users)
 
-@app.route("/user_auth", methods=[POST])
+@app.route("/user_auth", methods=['POST'])
 def user_auth():
 	"""Allows user to sign in, or creates new user if user is not in db."""
 	username = request.form['email-field']
 	password = request.form['pass-field']
-	if username == 'User.query.email':
+
+	# User.query.filter(User.email == 
+
+	if username == User.query.email and password == User.query.password:
 		session['current user'] = username
 		flash("Logged in as %s" % username)
 		return redirect("/")
