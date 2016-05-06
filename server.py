@@ -22,22 +22,22 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """Homepage."""
-
+    flash('hi')
     return render_template("homepage.html")
 
 @app.route("/users")
 def user_list():
 	"""Show list of users."""
-
 	users = User.query.all()
+	flash("it's working!")
 	return render_template("user_list.html", users=users)
 
 @app.route("/sign_in")
 def sign_in():
 	"""Allows user to sign in, or creates new user if user is not in db."""
-
+	flash('hi')
 	# users = User.query.all()
-	return render_template("sign-in.html")
+	return render_template("homepage.html")
 
 # @app.route("/create_new")
 # def user_list():
@@ -48,24 +48,33 @@ def sign_in():
 @app.route("/user_auth", methods=['POST'])
 def user_auth():
 	"""Allows user to sign in, or creates new user if user is not in db."""
-	username = request.form['email-field']
-	password = request.form['pass-field']
+	username = request.form.get('email-field')
+	password = request.form.get('pass-field')
 
 	# User.query.filter(User.email == 
 
-	if username == User.query.email and password == User.query.password:
-		session['current user'] = username
+	if username:
+		User.query.filter_by(email = username).first()
+		 #If username exists in db, sign in. 
+		 # Else, create user in db.
 		flash("Logged in as %s" % username)
-		return redirect("/")
-	else:
-		flash("Please create an account. You will be redirected to the sign-up page in exactly 600 milliseconds.")
-		return redirect("/create_new")
+		password = User.query.filter_by(password = password).first()
+		if password:
+			session['current user'] = username
+			flash("pw success Logged in as %s" % username)
+		# db.session.commit()
+			return render_template("homepage.html")
+	# else:
+	# 	flash("Please create an account. You will be redirected to the sign-up page in exactly 600 milliseconds.")
+	# 	return redirect("/create_new")
+
+
 
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension
-    app.debug = True
+    app.debug = False
 
     connect_to_db(app)
 
